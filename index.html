@@ -464,7 +464,7 @@
             
             document.getElementById('modalTitle').textContent = 'Drawer ' + currentDrawer;
             document.getElementById('modalBody').className = 'modal-body photo-body';
-            document.getElementById('modalBody').innerHTML = '<img src="' + photoUrl + '" alt="Drawer ' + currentDrawer + '" onerror="this.parentElement.innerHTML=\'<p style=\\'padding:40px;text-align:center;color:#999\\'>Photo not found. Upload Drawer' + currentDrawer + '.jpg to your repo.</p>\';">';
+            document.getElementById('modalBody').innerHTML = '<img src="' + photoUrl + '" alt="Drawer ' + currentDrawer + '" onerror="this.onerror=null; this.parentElement.innerHTML=\'<p style=padding:40px;text-align:center;color:#999>Photo not found. Upload Drawer' + currentDrawer + '.jpg to your repo.</p>\';">';
             document.getElementById('modalOverlay').classList.add('active');
         }
 
@@ -531,7 +531,8 @@
             } else {
                 html += '<ul class="item-list">';
                 items.forEach((item, index) => {
-                    html += '<li class="item-row"><span class="item-name">' + item.item + '</span><span class="item-qty">× ' + item.targetQty + '</span><button class="item-delete" onclick="deleteItem(\'' + item.drawer + '\', \'' + item.compartment + '\', \'' + item.item.replace(/'/g, "\\'") + '\')" title="Delete">×</button></li>';
+                    const safeItem = item.item.replace(/'/g, "&#39;");
+                    html += '<li class="item-row"><span class="item-name">' + item.item + '</span><span class="item-qty">× ' + item.targetQty + '</span><button class="item-delete" onclick="deleteItem(\'' + item.drawer + '\', \'' + item.compartment + '\', \'' + safeItem + '\')" title="Delete">×</button></li>';
                 });
                 html += '</ul>';
             }
